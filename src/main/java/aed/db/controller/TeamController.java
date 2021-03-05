@@ -13,6 +13,7 @@ import aed.db.model.Team;
 public class TeamController implements TeamDAO {
 
 	private Connection conn;
+	private Scanner sc;
 
 	public void visualizeAllTeams() {
 
@@ -83,12 +84,14 @@ public class TeamController implements TeamDAO {
 	public void deleteTeam(int codEquipo) {
 		try {
 
-			Scanner sc = new Scanner(System.in);
+			// Scanner sc = new Scanner(System.in);
 
+			sc.nextLine();
+			
 			Team team = getTeam(codEquipo);
 
 			System.out.println("¿Seguro que desea eliminar el equipo: " + team.getNomEquipo() + "? (s/n)");
-			String answer = sc.next();
+			String answer = sc.nextLine();
 
 			if (answer.equals("s")) {
 				Statement stmt = conn.createStatement();
@@ -96,7 +99,7 @@ public class TeamController implements TeamDAO {
 				stmt.executeUpdate(sql);
 			}
 
-			sc.close();
+			// sc.close();
 
 		} catch (SQLIntegrityConstraintViolationException ie) {
 			// Eliminar contratos antes que el equipo
@@ -146,8 +149,9 @@ public class TeamController implements TeamDAO {
 		return team;
 	}
 
-	public TeamController(Connection connection) {
+	public TeamController(Connection connection, Scanner sc) {
 		this.conn = connection;
+		this.sc = sc;
 	}
 
 	private static void printLines() {

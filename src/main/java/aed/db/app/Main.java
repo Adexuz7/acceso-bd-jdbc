@@ -15,12 +15,15 @@ public class Main {
 	private static TeamController teamController;
 
 	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
 
 		connection = MySQLConnection.connect();
 		// connection = SQLServerConnection.connect();
-		teamController = new TeamController(connection);
+		
+		teamController = new TeamController(connection, sc);
 
-		Scanner sc = new Scanner(System.in);
+		
 
 		boolean appRunning = true;
 
@@ -109,13 +112,10 @@ public class Main {
 
 			case 4:
 
-				Scanner sc4 = new Scanner(System.in);
-
 				System.out.println("Introduce código de equipo a eliminar:");
-				int codEquipo = sc4.nextInt();
+				int codEquipo = sc.nextInt();
 
 				teamController.deleteTeam(codEquipo);
-				sc.close();
 				break;
 
 			case 5:
