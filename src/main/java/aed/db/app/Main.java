@@ -8,34 +8,43 @@ import aed.db.connection.MySQLConnection;
 import aed.db.connection.SQLServerConnection;
 import aed.db.controller.TeamController;
 import aed.db.model.Team;
+import aed.db.repository.SQLRepository;
 
 public class Main {
 
 	private static Connection connection;
 	private static TeamController teamController;
+	private static SQLRepository sqlRepository;
 
 	public static void main(String[] args) {
-		
+
 		Scanner sc = new Scanner(System.in);
 
 		connection = MySQLConnection.connect();
 		// connection = SQLServerConnection.connect();
-		
-		teamController = new TeamController(connection, sc);
 
-		
+		teamController = new TeamController(connection, sc);
+		sqlRepository = new SQLRepository(connection);
 
 		boolean appRunning = true;
 
 		while (appRunning) {
 
+			System.out.println("-------------------------------------------------------");
 			System.out.println("Selecciona una opción:");
+			System.out.println("-------------------------------------------------------");
 			System.out.println("(1) Visualizar todos los equipos");
 			System.out.println("(2) Insertar un equipo");
 			System.out.println("(3) Modificar un equipo");
 			System.out.println("(4) Eliminar un equipo");
+			System.out.println("-------------------------------------------------------");
 			System.out.println("(5) Salir");
+			System.out.println("-------------------------------------------------------");
+			System.out.println("(6) Procedimiento: Obtener el contrato de un futbolista");
+			System.out.println("(7) Función: Obtener cantidad de meses en equipos");
+			System.out.println("-------------------------------------------------------");
 			int op = sc.nextInt();
+			sc.nextLine();
 
 			switch (op) {
 
@@ -122,6 +131,20 @@ public class Main {
 				appRunning = false;
 				break;
 
+			case 6:
+
+				System.out.println("Introduce dni:");
+				String dni = sc.nextLine();
+
+				sqlRepository.spObtenerContratoFutbolista(dni);
+				break;
+
+			case 7:
+				System.out.println("Introduce dni:");
+				String dni7 = sc.nextLine();
+
+				sqlRepository.fnMesesEnEquipos(dni7);
+				break;
 			}
 
 		}

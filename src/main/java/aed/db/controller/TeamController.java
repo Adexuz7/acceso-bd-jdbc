@@ -113,12 +113,14 @@ public class TeamController implements TeamDAO {
 				stmt = conn.createStatement();
 				sql = "DELETE FROM Equipos " + "WHERE codEquipo = " + codEquipo;
 				stmt.executeUpdate(sql);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} catch (SQLException se) {
+				se.printStackTrace();
 			}
 
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Ha habido un error, no se realizará la eliminación");
 		}
 
 		visualizeAllTeams();
